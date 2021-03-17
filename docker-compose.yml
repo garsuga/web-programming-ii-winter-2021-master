@@ -1,0 +1,65 @@
+version: '2'
+volumes:
+    web2mongodata:
+    web2nodemodules:
+services:
+    web2-nodejs:
+        build: .
+        image: "web2-nodejs"
+        container_name: "web2-nodejs"
+        environment:
+            - NODE_ENV=development
+        volumes:
+            - .:/app/web2/:rw
+            - ./data/root:/root/:rw
+            - web2nodemodules:/app/web2/node_modules/
+        ports:
+            - 8080:8080
+            - 9000:9000
+            - 9002:9002
+        networks:
+            web2:
+                aliases:
+                    - web2-nodejs
+        depends_on:
+            - web2-mongodb
+            - web2-selenium-chrome
+            - web2-selenium-firefox
+    # https://hub.docker.com/_/mongo
+    web2-mongodb:
+        image: mongo:4
+        container_name: "web2-mongodb"
+        environment:
+            - MONGO_DATA_DIR=/data/db
+        volumes:
+            - web2mongodata:/data/db
+        ports:
+            - 27017:27017
+        command: mongod --bind_ip 0.0.0.0
+        networks:
+            web2:
+                aliases:
+                    - web2-mongodb
+    # https://github.com/SeleniumHQ/docker-selenium/releases
+    web2-selenium-chrome:
+        image: selenium/standalone-chrome:3.141.59-zinc
+        container_name: "web2-selenium-chrome"
+        ports:
+            - 4444:4444
+        networks:
+            web2:
+                aliases:
+                    - web2-selenium-chrome
+
+    # https://github.com/SeleniumHQ/docker-selenium/releases
+    web2-selenium-firefox:
+        image: selenium/standalone-firefox:3.141.59
+        container_name: "web2-selenium-firefox"
+        ports:
+            - 4445:4444
+        networks:
+            web2:
+                aliases:
+                    - web2-selenium-firefox
+networks:
+    web2:

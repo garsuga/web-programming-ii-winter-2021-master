@@ -1,0 +1,20 @@
+<div class="d-flex flex-row flex-nowrap navbar bg-primary justify-content-start">
+    <div class="navbar-title-outer">
+        <a class="navbar-link" [routerLink]="['/home']">
+            <h5 class="align-middle navbar-title">Recipes Demo Site</h5>
+        </a>
+    </div>
+    <div class="m-2"></div>
+    <div class="navbar-text-outer float-left w-auto">
+        <a class="navbar-link" [routerLink]="['/recipes']">
+            <span class="align-middle navbar-text">Recipes</span>
+        </a>
+    </div>
+    <div class="navbar-text-outer float-left w-auto">
+        <a class="navbar-link" [routerLink]="['/users']">
+            <span class="align-middle navbar-text">Users</span>
+        </a>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

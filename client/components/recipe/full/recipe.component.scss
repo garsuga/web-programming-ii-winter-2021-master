@@ -1,0 +1,33 @@
+.recipe-image {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.recipe-title {
+
+}
+
+.recipe-header {
+    position: relative;
+    top:0;
+    left: 0;
+}
+
+.edit-icon {
+    fill: gray;
+}
+
+.remove-icon .add-icon .delete-icon .save-icon {
+    fill: white;
+}
+
+.list-button {
+    margin-left: 5px;
+}
+
+.list-button-vertical-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}

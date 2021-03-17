@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title row">
+            <div class="col-8">
+                <h5 *ngIf="!editing" class="float-left">{{review.description}}</h5>
+                <div *ngIf="editing" class="input-group input-group-lg">
+                    <textarea class="form-control" [(ngModel)]="review.description">
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-4">
+                <rating class="float-right" [(ngModel)]="review.rating" [readonly]="!editing"></rating>
+            </div>
+        </div>
+        <h6 class="card-subtitle mb-2 text-muted">{{nameToString(review.user.name)}}</h6>
+    </div>
+</div>

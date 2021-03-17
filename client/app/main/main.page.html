@@ -1,0 +1,34 @@
+<div class="" style="width: 100%">
+    <div class="row" style="width: 100%" style="margin-left: 15px; margin-right: 15px;">
+        <div class="d-none d-lg-block col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="p-4"></div>
+            <h1 class="page-header text-center">Recipes Demo Site</h1>
+            <div class="p-5"></div>
+            <div class="row">
+                <h4 class="col-9">
+                    Featured Recipes
+                </h4>
+                <button class="col-3 float-right btn-outline-primary btn" [routerLink]="['/recipes']" routerLinkActive="true" >
+                    View All
+                </button>
+            </div>
+            <div class="p-3"></div>
+            <div class="row">
+                <carousel class="w-100">
+                    <ng-template ngFor let-recipe [ngForOf]="recipes" let-i="index" let-f="first">
+                        <ng-template [ngIf]="i < recipesShown">
+                            <slide (click)="showRecipeModal(recipe)">
+                                <img class="rounded latest-recipe-image" [src]="recipe.image" [alt]="recipe.name" draggable="false">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h3>{{recipe.name}}</h3>
+                                    <p>{{recipe.description}}</p>
+                                </div>
+                            </slide>
+                        </ng-template>
+                    </ng-template>
+                </carousel>
+            </div>
+        </div>
+    </div>
+</div>

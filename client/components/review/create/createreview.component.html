@@ -1,0 +1,51 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-5 input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">User</label>
+                </div>
+                <select class="custom-select" (change)="onUserChange($event.target.value); validateInput();">
+                    <option selected>
+                        Select user...
+                    </option>
+                    <option *ngFor="let user of userList; index as i;" [value]="i">
+                        {{user.username}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-4 d-block">
+                <rating class="float-right mx-auto d-block" [(ngModel)]="rating" style="width: 70px;" (change)="validateInput();"></rating>
+            </div>
+            <div class="col-3">
+                <div class="float-right">
+                    <!--Save Button (Edit)-->
+                    <button type="button" [ngClass]="{'btn': true, 'btn-success': true, 'disabled': !inputValid}" (click)="acceptEdit();" title="Save">
+                        <!--Check-->
+                        <svg class="bi bi-check save-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                        </svg>
+                    </button>
+
+                    <!--Cancel Button (Edit)-->
+                    <button type="button" class="btn btn-danger" (click)="rejectEdit();" title="Cancel">
+                        <!--Check-->
+                        <svg class="bi bi-x remove-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-2"></div>
+
+        <div class="card-text">
+            <div class="input-group">
+                <textarea class="form-control" [(ngModel)]="description" (change)="validateInput();">
+
+                </textarea>
+            </div>
+        </div>
+    </div>
+</div>

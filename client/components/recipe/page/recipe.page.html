@@ -1,0 +1,29 @@
+<div class="" style="width: 100%">
+    <div class="row" style="width: 100%">
+        <div class="d-none d-md-block col-md-2"></div>
+        <div class="col-md-8">
+            <div class="p-4"></div>
+            <h1 class="page-header text-center">Recipes</h1>
+            <div class="p-3"></div>
+            <div class="page-header text-center">
+                <button class="btn-outline-primary btn" (click)="showNewRecipeModal()">
+                    Create Recipe
+                </button>
+            </div>
+
+            <div class="p-3"></div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-center align-items-stretch">
+                <recipe-card
+                    *ngFor="let recipe of recipes; index as i; trackBy:i"
+                    [recipe]='recipe'
+                    (click)="showRecipeModal(i, recipe, {});"
+                    style="margin: 0 20px 20px 20px;">
+                </recipe-card>
+            </div>
+
+
+        </div>
+        <div class="d-none d-md-block col-md-2"></div>
+    </div>
+</div>

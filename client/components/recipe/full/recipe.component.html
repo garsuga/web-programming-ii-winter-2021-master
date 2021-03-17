@@ -1,0 +1,156 @@
+<div>
+    <div class="card">
+        <button type="button" class="close" aria-label="Close" style="position: absolute; right: 15px; top: 15px; color: black;" (click)="bsModalRef.hide();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <img class="card-img-top recipe-image" [src]="recipe.image" [alt]="recipe.image" draggable="false">
+        <div class="container">
+            <div class="card-body">
+                <div class="card-title recipe-title row">
+                    <!--Title-->
+                    <h2 *ngIf="!editing" class="col-7">{{recipe.name}}</h2>
+                    <!--Title (Edit)-->
+                    <div *ngIf="editing" class="col-7 input-group-lg">
+                        <input class="form-control" [(ngModel)]="recipe.name">
+                    </div>
+                    <div class="col-5">
+                        <div class="float-right">
+                            <!--Edit Button-->
+                            <button *ngIf="!editing && editable" type="button" class="btn btn-light" (click)="editing = true; startEdit();" title="Edit">
+                                <!--Filled pencil-->
+                                <svg class="bi bi-pencil-fill edit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                </svg>
+                            </button>
+
+                            <!--Delete Button (Edit)-->
+                            <button *ngIf="editing" type="button" class="btn btn-warning" (click)="deleteRecipe();" title="Delete">
+                                <svg class="bi bi-trash-fill delete-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                  </svg>
+                            </button>
+
+                            <!--Save Button (Edit)-->
+                            <button *ngIf="editing" type="button" class="btn btn-success" (click)="editing = false; acceptEdit();" title="Save">
+                                <!--Check-->
+                                <svg class="bi bi-check save-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                  </svg>
+                            </button>
+
+                            <!--Cancel Button (Edit)-->
+                            <button *ngIf="editing" type="button" class="btn btn-danger" (click)="editing = false; creatingReview = false; rejectEdit();" title="Cancel">
+                                <!--Check-->
+                                <svg class="bi bi-x remove-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!--Image URL (Edit)-->
+                <div *ngIf="editing" class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            Image URL
+                        </span>
+                    </div>
+
+                    <input type="text" class="form-control" [(ngModel)]="recipe.image">
+                </div>
+
+                <!--Description-->
+                <p *ngIf="!editing" class="card-text">{{recipe.description}}</p>
+                <!--Description (Edit)-->
+                <div *ngIf="editing" class="card-text">
+                    <div class="input-group">
+                        <textarea class="form-control" [(ngModel)]="recipe.description"></textarea>
+                    </div>
+                </div>
+                <div class="p-4"></div>
+                <!--Prep Time-->
+                <h4>Prep Time</h4>
+                <div class="p-1"></div>
+                <!--Prep Time-->
+                <p *ngIf="!editing">{{recipe.prepTime}} minutes.</p>
+                <!--Prep Time (Edit)-->
+                <div *ngIf="editing" class="input-group">
+                    <input class="form-control" [(ngModel)]="recipe.prepTime" type="number">
+                </div>
+
+
+                <div class="p-4"></div>
+                <!--Cook Time-->
+                <h4>Cook Time</h4>
+                <div class="p-1"></div>
+                <!--Cook Time-->
+                <p *ngIf="!editing">{{recipe.cookTime}} minutes.</p>
+                <!--Cook Time (Edit)-->
+                <div *ngIf="editing" class="input-group">
+                    <input class="form-control" [(ngModel)]="recipe.cookTime" type="number">
+                </div>
+
+                <div class="p-4"></div>
+                <h4>Ingredients</h4>
+                <div class="p-1"></div>
+
+                <!--Ingredients-->
+                <edit-list [numbered]="false"
+                    [valueMembers]="['name', 'amount']"
+                    [(editing)]="editing"
+                    [(values)]="recipe.ingredients"
+                    (updateElement)="recipe.ingredients[$event.index] = $event.value;"></edit-list>
+                <div class="p-4"></div>
+                <h4>Directions</h4>
+                <div class="p-1"></div>
+                <!--Directions-->
+                <edit-list [numbered]="true"
+                    [(editing)]="editing"
+                    [(values)]="recipe.directions"
+                    (updateElement)="recipe.directions[$event.index] = $event.value;"></edit-list>
+
+                <div class="p-4"></div>
+                <div class="row">
+                    <h4 [ngClass]="{'col-12': !editing, 'col-6': editing}">
+                        Reviews
+                    </h4>
+                    <div [ngClass]="{'d-none': !editing, 'col-6': editing}" style="padding-right: 0 !important;">
+                        <button type="button" class="btn btn-outline-success float-right" (click)="creatingReview = true;">
+                            New
+                        </button>
+                    </div>
+                </div>
+                <div class="p-1"></div>
+                <!--Reviews-->
+                <div>
+                    <div *ngFor="let review of recipe.reviews; index as i;" class="row">
+                        <review [editing]="editing" [review]="review" [ngClass]="{'col-12': !editing, 'col-11': editing, 'review-card': true}" [recipeSaveEvent]="recipeSaveEvent">
+                        </review>
+                        <div [ngClass]="{'d-none': !editing, 'col-1': editing, 'list-button-vertical-container': true}">
+                            <div class="w-100 h-100 d-flex flex-column align-items-stretch">
+                                <!--Remove Button-->
+                                <button type="button" class="w-100 h-100 vertical-list-button btn btn-outline-danger list-button-vertical align-middle"
+                                    (click)="deleteReviewAt(i, review);">
+                                    <!--X-->
+                                    <svg class="bi bi-x remove-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="p-2"></div>
+                    </div>
+                </div>
+                <div *ngIf="recipe.reviews.length == 0 && !creatingReview">
+                    No reviews yet.
+                </div>
+                <!--Create Review (Creating Review)-->
+                <create-review *ngIf="creatingReview" (createReview)="createReview($event); creatingReview = false;" (cancelReview)="creatingReview = false;"></create-review>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
